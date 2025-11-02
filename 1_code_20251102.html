@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>满屏温馨提示</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            background: #000; /* 背景黑色，突出粉色窗口 */
+        }
+        .love-window {
+            position: absolute;
+            padding: 10px 15px;
+            border-radius: 6px;
+            box-shadow: 0 2px 8px rgba(255, 255, 255, 0.1);
+            font-family: "Microsoft YaHei", sans-serif;
+            font-size: 14px;
+            color: #fff;
+            text-align: center;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.8); }
+            to { opacity: 1; transform: scale(1); }
+        }
+    </style>
+</head>
+<body>
+    <script>
+        // 提示文字（可自定义）
+        const texts = ["畅享繁星正当时", "爱你哟", "想你了", "永远在一起"];
+
+        // 创建爱心窗口
+        function createLoveWindow() {
+            const window = document.createElement('div');
+            window.className = 'love-window';
+            
+            // 随机文字
+            const text = texts[Math.floor(Math.random() * texts.length)];
+            window.textContent = text;
+            
+            // 随机粉色渐变背景
+            const r = 255;
+            const g = 180 + Math.random() * 50;
+            const b = 200 + Math.random() * 55;
+            const bgColor1 = `rgb(${r}, ${Math.floor(g)}, ${Math.floor(b)})`;
+            const bgColor2 = `rgb(${r}, ${Math.floor(g + 20)}, ${Math.floor(b + 20)})`;
+            window.style.background = `linear-gradient(to bottom, ${bgColor1}, ${bgColor2})`;
+            
+            // 随机位置和大小
+            const screenWidth = window.innerWidth;
+            const screenHeight = window.innerHeight;
+            const windowWidth = 80 + Math.random() * 60;
+            const windowHeight = 30 + Math.random() * 20;
+            const x = Math.random() * (screenWidth - windowWidth);
+            const y = Math.random() * (screenHeight - windowHeight);
+            
+            window.style.width = `${windowWidth}px`;
+            window.style.height = `${windowHeight}px`;
+            window.style.left = `${x}px`;
+            window.style.top = `${y}px`;
+            
+            // 添加到页面
+            document.body.appendChild(window);
+            
+            // 2秒后渐隐并移除
+            setTimeout(() => {
+                window.style.opacity = '0';
+                window.style.transition = 'opacity 0.5s ease-in-out';
+                setTimeout(() => {
+                    document.body.removeChild(window);
+                }, 500);
+            }, 2000);
+        }
+
+        // 定时生成窗口
+        setInterval(createLoveWindow, 300);
+    </script>
+</body>
+</html>
